@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laporan Produksi & OEE</title>
+  <link rel="stylesheet" href="style_laporan.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <button id="darkModeToggle" class="btn-toggle-mode">🌙 Dark Mode</button>
+</head>
+<body>
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <h2>Dashboard</h2>
+      <nav>
+        <ul>
+          <li><a href="index.html">Beranda</a></li>
+          <li><a href="produksi.html">Produksi</a></li>
+          <li><a href="oee.html">OEE</a></li>
+          <li><a class="active" href="laporan.html">Laporan</a></li>
+          <li><a href="login_admin.html">Logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <header class="page-header">
+        <h1>Laporan Produksi & OEE</h1>
+      </header>
+
+      <section class="card">
+        <h3>📅 Filter Laporan</h3>
+        <div class="form-row">
+          <input type="date" id="filterTanggal" />
+          <input type="text" id="filterMesin" placeholder="Nama Mesin" />
+          <button onclick="exportExcel()" class="btn-export">📥 Export Excel</button>
+          <button onclick="window.print()" class="btn-export">🖨️ Export PDF</button>
+        </div>
+      </section>
+
+      <section class="table-section">
+        <h2>📋 Data Laporan Produksi & OEE</h2>
+        <div class="card">
+          <table>
+            <thead>
+              <tr>
+                <th>Tanggal</th>
+                <th>Mesin</th>
+                <th>Availability</th>
+                <th>Performance</th>
+                <th>Quality</th>
+                <th>OEE</th>
+              </tr>
+            </thead>
+            <tbody id="laporanBody">
+              <!-- Data otomatis terisi -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3>📈 Grafik Tren Produksi & OEE</h3>
+        <canvas id="laporanChart" height="100"></canvas>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const laporanBody = document.getElementById("laporanBody");
+    const ctx = document.getElementById("laporanChart").getContext("2d");
+
+    // Contoh data dummy
+    const laporanData = [
+      { tanggal: "2025-04-01", mesin: "Mesin A", a: 90, p: 95, q: 98 },
+      { tanggal: "2025-04-02", mesin: "Mesin A", a: 88, p: 93, q: 97 },
+      { tanggal: "2025-04-03", mesin: "Mesin B", a: 85, p: 90, q: 96 }
+    ];
+
+    // Render Tabel
+    function renderTabel(data) {
+      laporanBody.innerHTML = "";
+      data.forEach(item => {
+        const oee = ((item.a / 100) * (item.p / 100) * (item.q / 100) * 100).toFixed(1);
+        const row = `<tr>
+          <td>${item.tanggal}</td>
+          <td>${item.mesin}</td>
+          <td>${item.a}%</td>
+          <td>${item.p}%</td>
+          <td>${item.q}%</td>
+          <td>${oee}%</td>
+        </tr>`;
+        laporanBody.innerHTML += row;
+      });
+    }
+
+    // Render Grafik
+    function renderChart(data) {
+      const labels = data.map(d => d.tanggal);
+      const oeeData = data.map(d => ((d.a / 100) * (d.p / 100) * (d.q / 100) * 100).toFixed(1));
+
+      new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [{
+            label: "OEE %",
+            data: oeeData,
+            borderColor: "#3b82f6",
+            backgroundColor: "#93c5fd",
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: true } },
+          scales: {
+            y: { beginAtZero: true, max: 100 }
+          }
+        }
+      });
+    }
+
+    // Export Excel
+    function exportExcel() {
+      const table = document.querySelector("table");
+      const wb = XLSX.utils.table_to_book(table, { sheet: "Laporan" });
+      XLSX.writeFile(wb, "laporan_produksi_oee.xlsx");
+    }
+
+    // Jalankan awal
+    renderTabel(laporanData);
+    renderChart(laporanData);
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+
+  <script>
+    // Tanggal
+    document.getElementById("tanggal-hari-ini").textContent = new Date().toLocaleDateString("id-ID", {
+      day: "numeric", month: "long", year: "numeric"
+    });
+  
+    // 🌙 Dark Mode Toggle
+    const toggleBtn = document.getElementById("darkModeToggle");
+    const body = document.body;
+  
+    // Cek preferensi dari localStorage
+    if (localStorage.getItem("dark-mode") === "true") {
+      body.classList.add("dark");
+      toggleBtn.textContent = "☀️ Light Mode";
+    }
+  
+    toggleBtn.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      const isDark = body.classList.contains("dark");
+      toggleBtn.textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+      localStorage.setItem("dark-mode", isDark);
+    });
+  </script>
+</body>
+</html>

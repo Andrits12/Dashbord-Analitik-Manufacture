@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Produksi | Dashboard Manufaktur</title>
+  <link rel="stylesheet" href="style_produksi.css" />
+  <!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<button id="darkModeToggle" class="btn-toggle-mode">🌙 Dark Mode</button>
+
+</main>
+<main class="main-content">
+  <!-- HEADER TETAP -->
+
+  <!-- 📌 Filter & Search -->
+  <section style="margin-bottom: 30px;">
+    <input type="text" id="searchInput" placeholder="🔎 Cari jam, mesin, status..." style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; width: 300px;" onkeyup="filterTable()">
+  </section>
+
+  <!-- Cards Tetap -->
+
+  <!-- 📊 Grafik Tren Produksi -->
+  <section class="card" style="margin-bottom: 40px;">
+    <h3>📊 Tren Produksi per Jam</h3>
+    <canvas id="produksiChart" height="100"></canvas>
+  </section>
+
+  <!-- Table Tetap -->
+
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>🏭 Manufaktur Maju Mundur Jaya</h2>
+      <nav>
+        <ul>
+          <li><a href="index.html">Dashboard</a></li>
+          <li><a href="produksi.html" class="active">Produksi</a></li>
+          <li><a href="oee.html">OEE</a></li>
+          <li><a href="laporan.html">Laporan</a></li>
+          <li><a href="login_admin.html">Logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="page-header">
+        <div>
+          <h1>Data Produksi Harian</h1>
+          <p>Tanggal: <span id="tanggal-hari-ini"></span></p>
+        </div>
+        <div class="action-buttons">
+          <label for="filter-tanggal">📅</label>
+          <input type="date" id="filter-tanggal" />
+          <button onclick="exportTable()" class="btn-export">⬇️ Export ke Excel</button>
+        </div>
+      </header>
+
+      <!-- Cards Section -->
+      <section class="cards">
+        <div class="card">
+          <h3>🎯 Target Hari Ini</h3>
+          <p>15,000 Unit</p>
+        </div>
+        <div class="card">
+          <h3>📦 Produksi Aktual</h3>
+          <p>11,420 Unit</p>
+        </div>
+        <div class="card">
+          <h3>📈 Progress</h3>
+          <div class="progress-bar">
+            <div class="progress" style="width: 76%;">76%</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabel Produksi -->
+      <section class="table-section">
+        <h2>Detail Produksi Per Jam</h2>
+        <table id="tabel-produksi">
+          <thead>
+            <tr>
+              <th>Jam</th>
+              <th>Output</th>
+              <th>Status</th>
+              <th>Mesin</th>
+              <th>Keterangan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>07:00 - 08:00</td>
+              <td>1.250</td>
+              <td>✅ Normal</td>
+              <td>Mesin A1</td>
+              <td>Stabil</td>
+            </tr>
+            <tr>
+              <td>08:00 - 09:00</td>
+              <td>1.180</td>
+              <td>⚠️ Lambat</td>
+              <td>Mesin A1</td>
+              <td>Maintenance ringan</td>
+            </tr>
+            <tr>
+              <td>09:00 - 10:00</td>
+              <td>0</td>
+              <td>❌ Downtime</td>
+              <td>Mesin A1</td>
+              <td>Sensor error</td>
+            </tr>
+            <tr>
+              <td>10:00 - 11:00</td>
+              <td>1.300</td>
+              <td>✅ Normal</td>
+              <td>Mesin A2</td>
+              <td>Berjalan lancar</td>
+            </tr>
+            <tr>
+              <td>11:00 - 12:00</td>
+              <td>1.150</td>
+              <td>✅ Normal</td>
+              <td>Mesin A2</td>
+              <td>Optimal</td>
+            </tr>
+            <tr>
+              <td>07:00 - 08:00</td>
+              <td>1.250</td>
+              <td>✅ Normal</td>
+              <td>Mesin A1</td>
+              <td>Stabil</td>
+            </tr>
+            <tr>
+              <td>08:00 - 09:00</td>
+              <td>1.180</td>
+              <td>⚠️ Lambat</td>
+              <td>Mesin A1</td>
+              <td>Maintenance ringan</td>
+            </tr>
+            <tr>
+              <td>09:00 - 10:00</td>
+              <td>0</td>
+              <td>❌ Downtime</td>
+              <td>Mesin A1</td>
+              <td>Sensor error</td>
+            </tr>
+            <tr>
+              <td>07:00 - 08:00</td>
+              <td>1.250</td>
+              <td>✅ Normal</td>
+              <td>Mesin A1</td>
+              <td>Stabil</td>
+            </tr>
+            <tr>
+              <td>08:00 - 09:00</td>
+              <td>1.180</td>
+              <td>⚠️ Lambat</td>
+              <td>Mesin A1</td>
+              <td>Maintenance ringan</td>
+            </tr>
+            <tr>
+              <td>09:00 - 10:00</td>
+              <td>0</td>
+              <td>❌ Downtime</td>
+              <td>Mesin A1</td>
+              <td>Sensor error</td>
+            </tr>
+            <tr>
+              <td>09:00 - 10:00</td>
+              <td>0</td>
+              <td>❌ Downtime</td>
+              <td>Mesin A1</td>
+              <td>Sensor error</td>
+            </tr>
+            <tr>
+              <td>09:00 - 10:00</td>
+              <td>0</td>
+              <td>❌ Downtime</td>
+              <td>Mesin A1</td>
+              <td>Sensor error</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+  
+
+  <!-- Script Export Excel -->
+  <script src="https://unpkg.com/tableexport.jquery.plugin/tableToExcel.js"></script>
+  <script>
+    document.getElementById("tanggal-hari-ini").textContent = new Date().toLocaleDateString("id-ID", {
+      day: "numeric", month: "long", year: "numeric"
+    });
+
+    function exportTable() {
+      TableToExcel.convert(document.getElementById("tabel-produksi"), {
+        name: "Data_Produksi.xlsx",
+        sheet: { name: "Produksi Harian" }
+      });
+    }
+  </script>
+  <script>
+    document.getElementById("tanggal-hari-ini").textContent = new Date().toLocaleDateString("id-ID", {
+      day: "numeric", month: "long", year: "numeric"
+    });
+  
+    function exportTable() {
+      TableToExcel.convert(document.getElementById("tabel-produksi"), {
+        name: "Data_Produksi.xlsx",
+        sheet: { name: "Produksi Harian" }
+      });
+    }
+  
+    // 🔍 Filter Table
+    function filterTable() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const rows = document.querySelectorAll("#tabel-produksi tbody tr");
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(input) ? "" : "none";
+      });
+    }
+  
+    // 📊 Chart.js – Grafik Tren Produksi
+    const ctx = document.getElementById('produksiChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['07:00', '08:00', '09:00', '10:00', '11:00'],
+        datasets: [{
+          label: 'Output Produksi',
+          data: [1250, 1180, 0, 1300, 1150],
+          borderColor: '#0ea5e9',
+          backgroundColor: 'rgba(14, 165, 233, 0.1)',
+          tension: 0.3,
+          pointRadius: 5,
+          pointBackgroundColor: '#0ea5e9',
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Output (Unit)'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Jam Produksi'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top'
+          }
+        }
+      }
+    });
+  </script>
+  <script>
+    // Tanggal
+    document.getElementById("tanggal-hari-ini").textContent = new Date().toLocaleDateString("id-ID", {
+      day: "numeric", month: "long", year: "numeric"
+    });
+  
+    // 🌙 Dark Mode Toggle
+    const toggleBtn = document.getElementById("darkModeToggle");
+    const body = document.body;
+  
+    // Cek preferensi dari localStorage
+    if (localStorage.getItem("dark-mode") === "true") {
+      body.classList.add("dark");
+      toggleBtn.textContent = "☀️ Light Mode";
+    }
+  
+    toggleBtn.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      const isDark = body.classList.contains("dark");
+      toggleBtn.textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+      localStorage.setItem("dark-mode", isDark);
+    });
+  </script>
+  
+</body>
+</html>

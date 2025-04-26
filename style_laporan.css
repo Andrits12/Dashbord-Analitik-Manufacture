@@ -1,0 +1,256 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background-color: #f3f4f6;
+    color: #111827;
+  }
+  
+  body.dark {
+    background-color: #1f2937;
+    color: #f3f4f6;
+  }
+  
+  .dashboard-container {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .sidebar {
+    background-color: #1f2937;
+    color: white;
+    padding: 20px;
+    width: 220px;
+  }
+  
+  .sidebar h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar li {
+    margin: 10px 0;
+  }
+  
+  .sidebar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .sidebar a.active {
+    text-decoration: underline;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .btn-toggle-mode {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #3b82f6;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  body.dark .card {
+    background-color: #374151;
+  }
+  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .form-row input,
+  .form-row button {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+  }
+  
+  .btn-export {
+    background-color: #10b981;
+    color: white;
+    cursor: pointer;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th,
+  td {
+    padding: 10px;
+    border: 1px solid #e5e7eb;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #f9fafb;
+  }
+  
+  body.dark th {
+    background-color: #4b5563;
+  }
+  
+  body.dark td {
+    background-color: #1f2937;
+    color: #f3f4f6;
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard-container {
+      flex-direction: column;
+    }
+  
+    .sidebar {
+      width: 100%;
+      text-align: center;
+    }
+  
+    .form-row {
+      flex-direction: column;
+    }
+  
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+      display: block;
+    }
+  
+    thead {
+      display: none;
+    }
+  
+    td {
+      padding: 10px;
+      position: relative;
+      text-align: left;
+      border: none;
+      border-bottom: 1px solid #ddd;
+    }
+  
+    td::before {
+      content: attr(data-label);
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+      color: #6b7280;
+    }
+  }
+  
+  /* ======= DARK MODE TOGGLE ======= */
+body.dark {
+    background-color: #111827;
+    color: #e5e7eb;
+  }
+  
+  body.dark .sidebar {
+    background-color: #1f2937;
+    color: #e5e7eb;
+  }
+  
+  body.dark .sidebar a {
+    color: #cbd5e1;
+  }
+  
+  body.dark .sidebar a.active,
+  body.dark .sidebar a:hover {
+    background-color: #2563eb;
+    color: white;
+  }
+  
+  body.dark .main-content {
+    background-color: #111827;
+  }
+  
+  body.dark .card,
+  body.dark table {
+    background-color: #1e293b;
+    color: #e5e7eb;
+  }
+  
+  body.dark th {
+    background-color: #334155;
+    color: #f3f4f6;
+  }
+  
+  body.dark tr:hover {
+    background-color: #1f2937;
+  }
+  
+  body.dark input,
+  body.dark .btn-export {
+    background-color: #374151;
+    color: #e5e7eb;
+    border: 1px solid #4b5563;
+  }
+  
+  body.dark .btn-toggle-mode {
+    background-color: #374151;
+    color: #fefefe;
+  }
+  
+  .btn-toggle-mode {
+    padding: 8px 14px;
+    background-color: #e2e8f0;
+    color: #111827;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-left: auto;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+  form {
+    margin-top: 15px;
+  }
+  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .form-row input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+  }
+  
+  body.dark .form-row input {
+    background-color: #374151;
+    color: #fff;
+    border: 1px solid #4b5563;
+  }
+  

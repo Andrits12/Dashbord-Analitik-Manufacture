@@ -1,0 +1,238 @@
+/* ====== Reset & Layout ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f1f5f9;
+  color: #333;
+}
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  background-color: #1e293b;
+  color: #fff;
+  padding: 30px 20px;
+}
+
+.sidebar h2 {
+  font-size: 22px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.sidebar nav ul {
+  list-style: none;
+}
+
+.sidebar nav ul li a {
+  color: #cbd5e1;
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.sidebar nav ul li a:hover,
+.sidebar nav ul li a.active {
+  background-color: #334155;
+  color: #38bdf8;
+}
+
+.main-content {
+  flex: 1;
+  padding: 40px;
+}
+
+/* ====== Header ====== */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.page-header h1 {
+  font-size: 28px;
+  color: #1e293b;
+}
+
+.page-header p {
+  color: #64748b;
+  margin-top: 6px;
+}
+
+/* ====== Action Buttons ====== */
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.action-buttons input[type="date"] {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+}
+
+.btn-export {
+  background-color: #0ea5e9;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-export:hover {
+  background-color: #0284c7;
+}
+
+/* ====== Cards Section ====== */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+.card p {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1e293b;
+}
+
+/* ====== Progress Bar ====== */
+.progress-bar {
+  background-color: #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 24px;
+}
+
+.progress {
+  height: 100%;
+  background-color: #22c55e;
+  color: white;
+  text-align: center;
+  line-height: 24px;
+  font-weight: bold;
+}
+
+/* ====== Table Section ====== */
+.table-section h2 {
+  margin-bottom: 16px;
+  font-size: 20px;
+  color: #1e293b;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+table th, table td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+table th {
+  background-color: #f1f5f9;
+  color: #334155;
+}
+
+table tr:hover {
+  background-color: #f8fafc;
+}
+/* ======= DARK MODE TOGGLE ======= */
+body.dark {
+  background-color: #111827;
+  color: #e5e7eb;
+}
+
+body.dark .sidebar {
+  background-color: #1f2937;
+  color: #e5e7eb;
+}
+
+body.dark .sidebar a {
+  color: #cbd5e1;
+}
+
+body.dark .sidebar a.active,
+body.dark .sidebar a:hover {
+  background-color: #2563eb;
+  color: white;
+}
+
+body.dark .main-content {
+  background-color: #111827;
+}
+
+body.dark .card,
+body.dark table {
+  background-color: #1e293b;
+  color: #e5e7eb;
+}
+
+body.dark th {
+  background-color: #334155;
+  color: #f3f4f6;
+}
+
+body.dark tr:hover {
+  background-color: #1f2937;
+}
+
+body.dark input,
+body.dark .btn-export {
+  background-color: #374151;
+  color: #e5e7eb;
+  border: 1px solid #4b5563;
+}
+
+body.dark .btn-toggle-mode {
+  background-color: #374151;
+  color: #fefefe;
+}
+
+.btn-toggle-mode {
+  padding: 8px 14px;
+  background-color: #e2e8f0;
+  color: #111827;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: auto;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+  

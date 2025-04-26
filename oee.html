@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OEE | Dashboard Manufaktur</title>
+  <link rel="stylesheet" href="style_oee.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<button id="darkModeToggle" class="btn-toggle-mode">🌙 Dark Mode</button>
+
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>🏭 Manufaktur Maju Mundur</h2>
+      <nav>
+        <ul>
+          <li><a href="index.html">Dashboard</a></li>
+          <li><a href="produksi.html">Produksi</a></li>
+          <li><a href="oee.html" class="active">OEE</a></li>
+          <li><a href="laporan.html">Laporan</a></li>
+          <li><a href="login_admin.html">Logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="page-header">
+        <div>
+          <h1>OEE - Efektivitas Mesin</h1>
+          <p>Tanggal: <span id="tanggal-hari-ini"></span></p>
+        </div>
+      </header>
+
+      <section class="card">
+        <h3>📝 Input Data OEE Manual</h3>
+        <form id="oeeForm">
+          <div class="form-row">
+            <input type="text" placeholder="Nama Mesin" name="mesin" required />
+            <input type="number" placeholder="Availability (%)" name="availability" required />
+            <input type="number" placeholder="Performance (%)" name="performance" required />
+            <input type="number" placeholder="Quality (%)" name="quality" required />
+            <button type="submit" class="btn-export">Simpan</button>
+          </div>
+        </form>
+      </section>
+      
+
+      <!-- OEE Summary Cards -->
+      <section class="cards">
+        <div class="card">
+          <h3>🕒 Availability</h3>
+          <p>89%</p>
+        </div>
+        <div class="card">
+          <h3>⚡ Performance</h3>
+          <p>92%</p>
+        </div>
+        <div class="card">
+          <h3>✅ Quality</h3>
+          <p>96%</p>
+        </div>
+        <div class="card">
+          <h3>📊 OEE Total</h3>
+          <p>78.6%</p>
+        </div>
+      </section>
+
+      <!-- Grafik OEE -->
+      <section class="card" style="margin-bottom: 40px;">
+        <h3>📈 Grafik OEE per Mesin</h3>
+        <canvas id="oeeChart" height="100"></canvas>
+      </section>
+
+      <!-- Tabel OEE -->
+      <section class="table-section">
+        <h2>📋 Detail OEE per Mesin</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Mesin</th>
+              <th>Availability</th>
+              <th>Performance</th>
+              <th>Quality</th>
+              <th>OEE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mesin A1</td>
+              <td>85%</td>
+              <td>90%</td>
+              <td>95%</td>
+              <td>72.7%</td>
+            </tr>
+            <tr>
+              <td>Mesin A2</td>
+              <td>91%</td>
+              <td>93%</td>
+              <td>97%</td>
+              <td>82.1%</td>
+            </tr>
+            <tr>
+              <td>Mesin A3</td>
+              <td>88%</td>
+              <td>89%</td>
+              <td>94%</td>
+              <td>73.8%</td>
+            </tr>
+            <tr>
+                <td>Mesin A1</td>
+                <td>85%</td>
+                <td>90%</td>
+                <td>95%</td>
+                <td>72.7%</td>
+              </tr>
+              <tr>
+                <td>Mesin A2</td>
+                <td>91%</td>
+                <td>93%</td>
+                <td>97%</td>
+                <td>82.1%</td>
+              </tr>
+              <tr>
+                <td>Mesin A3</td>
+                <td>88%</td>
+                <td>89%</td>
+                <td>94%</td>
+                <td>73.8%</td>
+              </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <!-- Script -->
+  <script>
+    document.getElementById("tanggal-hari-ini").textContent = new Date().toLocaleDateString("id-ID", {
+      day: "numeric", month: "long", year: "numeric"
+    });
+
+    // 📊 Chart OEE per Mesin
+    const ctx = document.getElementById('oeeChart').getContext('2d');
+    const oeeChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Mesin A1', 'Mesin A2', 'Mesin A3'],
+        datasets: [
+          {
+            label: 'Availability',
+            data: [85, 91, 88],
+            backgroundColor: '#38bdf8'
+          },
+          {
+            label: 'Performance',
+            data: [90, 93, 89],
+            backgroundColor: '#34d399'
+          },
+          {
+            label: 'Quality',
+            data: [95, 97, 94],
+            backgroundColor: '#facc15'
+          },
+          {
+            label: 'OEE',
+            data: [72.7, 82.1, 73.8],
+            backgroundColor: '#f97316'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,
+            title: {
+              display: true,
+              text: 'Persentase (%)'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top'
+          }
+        }
+      }
+    });
+  </script>
+  <script>
+    // Tanggal
+    document.getElementById("tanggal-hari-ini").textContent = new Date().toLocaleDateString("id-ID", {
+      day: "numeric", month: "long", year: "numeric"
+    });
+  
+    // 🌙 Dark Mode Toggle
+    const toggleBtn = document.getElementById("darkModeToggle");
+    const body = document.body;
+  
+    // Cek preferensi dari localStorage
+    if (localStorage.getItem("dark-mode") === "true") {
+      body.classList.add("dark");
+      toggleBtn.textContent = "☀️ Light Mode";
+    }
+  
+    toggleBtn.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      const isDark = body.classList.contains("dark");
+      toggleBtn.textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+      localStorage.setItem("dark-mode", isDark);
+    });
+  </script>
+
+// Menyimpan dan menampilkan history
+
+<script>
+  const oeeForm = document.getElementById('oeeForm');
+  const tableBody = document.querySelector('table tbody');
+
+  oeeForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(oeeForm);
+    const mesin = formData.get('mesin');
+    const a = Number(formData.get('availability'));
+    const p = Number(formData.get('performance'));
+    const q = Number(formData.get('quality'));
+    const oee = ((a / 100) * (p / 100) * (q / 100) * 100).toFixed(1);
+
+    const row = `
+      <tr>
+        <td>${mesin}</td>
+        <td>${a}%</td>
+        <td>${p}%</td>
+        <td>${q}%</td>
+        <td>${oee}%</td>
+      </tr>
+    `;
+    tableBody.innerHTML += row;
+    oeeForm.reset();
+  });
+</script>
+
+  
+  
+</body>
+</html>
